@@ -5,9 +5,7 @@ metadata:
   name: save-rabbit
 spec:
   replicas: 2
-  image:
-    name: rabbitmq
-    tag: 3-alpine
+  image: rabbitmq:3-alpine
   #secret_credentials: rabbit-users
   #secret_service_account: rabbit-service
 
@@ -21,8 +19,8 @@ spec:
   # and write it here
   k8s_serviceaccount: "rabbitmq-operator"
 
-  k8s_host: "kubernetes.default.svc.cluster.imp"
-  k8s_service_discovery: "svc.cluster.imp"
+  k8s_host: "kubernetes.default.svc.cluster.local"
+  k8s_service_discovery: "svc.cluster.local"
   k8s_addrtype: hostname
   cluster_node_cleanup_interval: 10
   auth:

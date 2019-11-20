@@ -69,6 +69,12 @@ spec:
     - rabbitmq_management_agent
 ```
 
+Rabbitmq docs:
+
+* https://www.jianshu.com/p/24f464f9161c
+* https://juejin.im/post/5c96379c5188252d5379e687
+
+
 Default plugins:
 
 * rabbitmq_consistent_hash_exchange,

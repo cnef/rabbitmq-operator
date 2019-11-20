@@ -1,5 +1,8 @@
-operator-sdk generate k8s
-operator-sdk build 716309063777.dkr.ecr.us-east-1.amazonaws.com/rabbitmq-operator:debug
-eval $(aws ecr get-login --no-include-email --region us-east-1 --profile staging | sed 's|https://||')
-docker push 716309063777.dkr.ecr.us-east-1.amazonaws.com/rabbitmq-operator:debug
-kubectl delete po -l app=rabbitmq-operator
+#!/bin/sh
+build_image=registry.vizion.ai/library/rabbitmq-operator:v1.0
+
+export GOROOT=/usr/local/Cellar/go/1.12.7/libexec
+export GO111MODULE=on
+operator-sdk generate k8s --verbose
+operator-sdk build $build_image
+docker push $build_image

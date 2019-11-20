@@ -154,7 +154,7 @@ func mergeMaps(itermaps ...map[string]string) map[string]string {
 
 func returnLabels(cr *rabbitmqv1.Rabbitmq) map[string]string {
 	labels := map[string]string{
-		"rabbitmq.improvado.io/instance":      cr.Name,
+		"rabbitmq.improvado.io/instance": cr.Name,
 	}
 	return labels
 }
@@ -391,7 +391,7 @@ func newStatefulSet(cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) *v1.Sta
 	// container with rabbitmq
 	rabbitmqContainer := corev1.Container{
 		Name:  "rabbitmq",
-		Image: cr.Spec.K8SImage.Name + ":" + cr.Spec.K8SImage.Tag,
+		Image: cr.Spec.K8SImage,
 		Env: append(appendNodeVariables(cr.Spec.K8SENV, cr), corev1.EnvVar{
 			Name:      "RABBITMQ_ERLANG_COOKIE",
 			ValueFrom: &corev1.EnvVarSource{ConfigMapKeyRef: &corev1.ConfigMapKeySelector{LocalObjectReference: corev1.LocalObjectReference{Name: cr.Name}, Key: ".erlang.cookie"}},
@@ -453,7 +453,7 @@ func newStatefulSet(cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) *v1.Sta
 
 	podTemplate := corev1.PodTemplateSpec{
 		ObjectMeta: metav1.ObjectMeta{
-			Labels: returnLabels(cr),
+			Labels:      returnLabels(cr),
 			Annotations: returnAnnotations(cr),
 		},
 		Spec: corev1.PodSpec{
@@ -510,7 +510,8 @@ func newStatefulSet(cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) *v1.Sta
 			Finalizers: cr.ObjectMeta.Finalizers,
 		},
 		Spec: corev1.PersistentVolumeClaimSpec{
-			AccessModes: []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce},
+			StorageClassName: cr.Spec.RabbitmqStorageClass,
+			AccessModes:      []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce},
 			Resources: corev1.ResourceRequirements{
 				Requests: corev1.ResourceList{
 					corev1.ResourceStorage: cr.Spec.RabbitmqVolumeSize,

@@ -10,12 +10,6 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// RabbitmqImage Sets image url and tag
-type RabbitmqImage struct {
-	Name string `json:"name"`
-	Tag  string `json:"tag"`
-}
-
 // RabbitmqSSL sets SSL parameters
 type RabbitmqSSL struct {
 	Enabled       bool   `json:"enabled"`
@@ -103,15 +97,15 @@ type RabbitmqSpec struct {
 	K8SENV []corev1.EnvVar `json:"env,omitempty"`
 
 	// you can set your own image instead of official
-	K8SImage RabbitmqImage `json:"image"`
+	K8SImage string `json:"image"`
 
 	// TODO: additional labels
 	K8SLabels []metav1.LabelSelector `json:"k8s_labels"`
 
 	// purge all PVC after CR deletion, default false
-	RabbitmqPurgePVC bool `json:"purgePVC,omitempty"`
-	// PersistentVolumeClaim in k8s style
-	RabbitmqVolumeSize resource.Quantity `json:"volume_size"`
+	RabbitmqPurgePVC     bool              `json:"purgePVC,omitempty"`
+	RabbitmqVolumeSize   resource.Quantity `json:"volume_size"`
+	RabbitmqStorageClass *string           `json:"storage_class"`
 
 	// TODO: set rabbitmq limits to pod limits, remove RabbitmqMemoryHighWatermark Spec after it
 	RabbitmqPodRequests                 corev1.ResourceList `json:"pod_requests,omitempty"`
