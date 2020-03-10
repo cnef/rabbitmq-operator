@@ -71,16 +71,16 @@ func applyDataOnTemplate(reqLogger logr.Logger, templateContent string, cr templ
 	return buf.String(), err
 }
 
-func (r *ReconcileRabbitmq) reconcileConfigMap(reqLogger logr.Logger, cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) (reconcile.Result, error) {
+func (r *ReconcileRabbitmq) reconcileConfigMap(reqLogger logr.Logger, cr *rabbitmqv1.Rabbitmq, secretNames secretResources) (reconcile.Result, error) {
 	reqLogger.Info("Started reconciling Configmap", "ConfigMap.Namespace", cr.Namespace, "ConfigMap.Name", cr.Name)
 	var err error
 	var templateData templateDataStruct
 
 	secretObj := corev1.Secret{}
-	reqLogger.Info("Configmap receiving secret", "ConfigMap.Namespace", cr.Namespace, "ConfigMap.Name", cr.Name, "Secret name", secretNames.ServiceAccount)
-	secretObj, err = r.getSecret(secretNames.ServiceAccount, cr.Namespace)
+	reqLogger.Info("Configmap receiving secret", "ConfigMap.Namespace", cr.Namespace, "ConfigMap.Name", cr.Name, "Secret name", secretNames.Account)
+	secretObj, err = r.getSecret(secretNames.Account, cr.Namespace)
 	if err != nil {
-		reqLogger.Info("Configmap can't receive secret", "ConfigMap.Namespace", cr.Namespace, "ConfigMap.Name", cr.Name, "Secret name", secretNames.ServiceAccount)
+		reqLogger.Info("Configmap can't receive secret", "ConfigMap.Namespace", cr.Namespace, "ConfigMap.Name", cr.Name, "Secret name", secretNames.Account)
 		return reconcile.Result{}, err
 	}
 

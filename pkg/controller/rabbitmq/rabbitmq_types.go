@@ -5,9 +5,9 @@ type basicAuthCredentials struct {
 	password string
 }
 
-type secretResouces struct {
-	ServiceAccount string
-	Credentials    string
+type secretResources struct {
+	Account     string //sa account secret name
+	Credentials string
 }
 
 type rabbitmqUserStruct struct {

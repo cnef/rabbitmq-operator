@@ -5,14 +5,11 @@ metadata:
   name: imp20rabbit
 spec:
   replicas: 2
-  image:
-    name: rabbitmq
-    tag: 3-alpine
-  #secret_credentials: rabbit-users
-  #secret_service_account: rabbit-service
+  image: rabbitmq:3-alpine
+  account_secret: rabbitmq-server-account
 
   # comment or set 0 if no exporter needed
-  prometheus_exporter_port: 9091
+  #prometheus_exporter_port: 9091
   #prometheus_image: "kbudde/rabbitmq-exporter:v0.28.0"
 
   memory_high_watermark: 256M
@@ -21,8 +18,8 @@ spec:
   # and write it here
   k8s_serviceaccount: "rabbitmq-operator"
 
-  k8s_host: "kubernetes.default.svc.cluster.imp"
-  k8s_service_discovery: "svc.cluster.imp"
+  k8s_host: "kubernetes.default.svc.cluster.local"
+  k8s_service_discovery: "svc.cluster.local"
   k8s_addrtype: hostname
   cluster_node_cleanup_interval: 10
   auth:
@@ -41,3 +38,14 @@ spec:
         ha-sync-mode: "automatic"
       priority: 0
       apply-to: all
+---
+apiVersion: v1
+data:
+  cookie: SEYyM2ZaekpweWYzQkgzdGdudmw0NXR6UDMyNFpX
+  password: ZENzNDZ5OHNiVUYwUnZBeXVKSlFLaGs2S0h6SHNG
+  username: c2E=
+kind: Secret
+metadata:
+  name: rabbitmq-server-account
+  namespace: vizion
+type: Opaque

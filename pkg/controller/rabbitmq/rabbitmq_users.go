@@ -12,12 +12,12 @@ import (
 
 // Like policies, we need to remove all users and add them from secret
 
-func (r *ReconcileRabbitmq) syncUsersCredentials(ctx context.Context, reqLogger logr.Logger, cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) error {
+func (r *ReconcileRabbitmq) syncUsersCredentials(ctx context.Context, reqLogger logr.Logger, cr *rabbitmqv1.Rabbitmq, secretNames secretResources) error {
 
 	// get service account credentials
 	var serviceAccount basicAuthCredentials
 
-	username, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.ServiceAccount, "username")
+	username, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.Account, "username")
 	serviceAccount.username = username
 	if err != nil {
 		reqLogger.Info("Users: auth username not found")
@@ -25,7 +25,7 @@ func (r *ReconcileRabbitmq) syncUsersCredentials(ctx context.Context, reqLogger 
 		return err
 	}
 
-	password, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.ServiceAccount, "password")
+	password, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.Account, "password")
 	serviceAccount.password = password
 	if err != nil {
 		reqLogger.Info("Users: auth password not found")

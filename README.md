@@ -25,14 +25,12 @@ spec:
         topologyKey: failure-domain.beta.kubernetes.io/zonei
 
   # set rabbitmq docker image, use hub.docker.com or your own
-  image:
-    name: rabbitmq
-    tag: 3-alpine
+  image: rabbitmq:3-alpine
   
   # use custom names for secrets instead of default based on CRD name
   # default_user, default_password and cookie is generated once at first start
-  #secret_credentials: rabbit-users
-  #secret_service_account: rabbit-service
+  #credentials_secret: rabbit-users
+  #account_secret: rabbit-service
   
   # set vm_memory_high_watermark.absolute value
   memory_high_watermark: 256M

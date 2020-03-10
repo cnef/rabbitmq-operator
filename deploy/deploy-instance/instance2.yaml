@@ -6,8 +6,8 @@ metadata:
 spec:
   replicas: 2
   image: rabbitmq:3-alpine
-  #secret_credentials: rabbit-users
-  #secret_service_account: rabbit-service
+  #credentials_secret: rabbit-users
+  #account_secret: rabbit-service
 
   # comment or set 0 if no exporter needed
   prometheus_exporter_port: 9091

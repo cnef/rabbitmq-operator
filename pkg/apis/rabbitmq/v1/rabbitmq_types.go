@@ -64,8 +64,8 @@ type RabbitmqSpec struct {
 
 	// all secrets generated once with CRDs name, but you can set it by hands
 	// usualy not needed
-	RabbitmqSecretCredentials    string `json:"secret_credentials,omitempty"`
-	RabbitmqSecretServiceAccount string `json:"secret_service_account,omitempty"`
+	RabbitmqCredentialsSecret string `json:"credentials_secret,omitempty"`
+	RabbitmqAccountSecret     string `json:"account_secret,omitempty"`
 
 	// working now, but will be ignored in future versions
 	RabbitmqMemoryHighWatermark string `json:"memory_high_watermark,omitempty"`

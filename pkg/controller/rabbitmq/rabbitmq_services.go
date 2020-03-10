@@ -44,18 +44,26 @@ func (r *ReconcileRabbitmq) reconcileService(reqLogger logr.Logger, cr *rabbitmq
 		return reconcile.Result{}, err
 	}
 
+	shouldUpdate := false
 	if !reflect.DeepEqual(found.Spec.Ports, service.Spec.Ports) {
 		reqLogger.Info("Ports not deep equal", "Service.Namespace", service.Namespace, "Service.Name", service.Name)
 		found.Spec.Ports = service.Spec.Ports
+		shouldUpdate = true
 	}
 
 	if !reflect.DeepEqual(found.Spec.Selector, service.Spec.Selector) {
 		reqLogger.Info("Selector not deep equal", "Service.Namespace", service.Namespace, "Service.Name", service.Name)
 		found.Spec.Selector = service.Spec.Selector
+		shouldUpdate = true
 	}
 
 	if !reflect.DeepEqual(found.Labels, service.Labels) {
 		found.Labels = service.Labels
+		shouldUpdate = true
+	}
+
+	if !shouldUpdate {
+		return reconcile.Result{}, nil
 	}
 
 	if err = r.client.Update(context.TODO(), found); err != nil {

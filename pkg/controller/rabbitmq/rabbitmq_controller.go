@@ -377,7 +377,7 @@ func appendNodeVariables(env []corev1.EnvVar, cr *rabbitmqv1.Rabbitmq) []corev1.
 	)
 }
 
-func newStatefulSet(cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) *v1.StatefulSet {
+func newStatefulSet(cr *rabbitmqv1.Rabbitmq, secretNames secretResources) *v1.StatefulSet {
 
 	// prepare containers for pod
 	podContainers := []corev1.Container{}
@@ -433,11 +433,11 @@ func newStatefulSet(cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) *v1.Sta
 			Env: []corev1.EnvVar{
 				{
 					Name:      "RABBIT_USER",
-					ValueFrom: &corev1.EnvVarSource{SecretKeyRef: &corev1.SecretKeySelector{LocalObjectReference: corev1.LocalObjectReference{Name: secretNames.ServiceAccount}, Key: "username"}},
+					ValueFrom: &corev1.EnvVarSource{SecretKeyRef: &corev1.SecretKeySelector{LocalObjectReference: corev1.LocalObjectReference{Name: secretNames.Account}, Key: "username"}},
 				},
 				{
 					Name:      "RABBIT_PASSWORD",
-					ValueFrom: &corev1.EnvVarSource{SecretKeyRef: &corev1.SecretKeySelector{LocalObjectReference: corev1.LocalObjectReference{Name: secretNames.ServiceAccount}, Key: "password"}},
+					ValueFrom: &corev1.EnvVarSource{SecretKeyRef: &corev1.SecretKeySelector{LocalObjectReference: corev1.LocalObjectReference{Name: secretNames.Account}, Key: "password"}},
 				},
 			},
 			Ports: []corev1.ContainerPort{

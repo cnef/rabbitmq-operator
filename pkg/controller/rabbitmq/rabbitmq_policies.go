@@ -11,12 +11,12 @@ import (
 )
 
 // setPolicies run as go routine
-func (r *ReconcileRabbitmq) setPolicies(ctx context.Context, reqLogger logr.Logger, cr *rabbitmqv1.Rabbitmq, secretNames secretResouces) error {
+func (r *ReconcileRabbitmq) setPolicies(ctx context.Context, reqLogger logr.Logger, cr *rabbitmqv1.Rabbitmq, secretNames secretResources) error {
 
 	// get service account credentials
 	var serviceAccount basicAuthCredentials
 
-	username, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.ServiceAccount, "username")
+	username, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.Account, "username")
 	serviceAccount.username = username
 	if err != nil {
 		reqLogger.Info("Users: auth username not found")
@@ -24,7 +24,7 @@ func (r *ReconcileRabbitmq) setPolicies(ctx context.Context, reqLogger logr.Logg
 		return err
 	}
 
-	password, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.ServiceAccount, "password")
+	password, err := r.getSecretData(reqLogger, cr.Namespace, secretNames.Account, "password")
 	serviceAccount.password = password
 	if err != nil {
 		reqLogger.Info("Users: auth password not found")
